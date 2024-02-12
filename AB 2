@@ -1,0 +1,27 @@
+//AB 02 E2 Aufgabe 1-4
+class AB2 {
+  static void ZahlDoppel(){
+    double zahl = Double.parseDouble(System.console().readLine("Zahl her:")) ;
+    Double zahl2 = zahl *2;
+    System.out.println("Ergebnis: "+ zahl2 );
+  }
+  static void multiplier(){
+    double zahl =  Double.parseDouble(System.console().readLine("Zahl 1:"));
+    double zahl2 =  Double.parseDouble(System.console().readLine("Zahl 2:"));
+    System.out.println("Ergebnis: "+ zahl * zahl2 );
+  }
+    static void Zinssatz(){
+    double startkapital =  Double.parseDouble(System.console().readLine("Startkapital:"));
+    double zinssatz =  Double.parseDouble(System.console().readLine("Zinssatz:"));
+    double zinsen = startkapital/100 * zinssatz;
+    System.out.println(zinsen +" Zinsen");
+  }
+  static void ElWiderstand(){
+    double spannung =  Double.parseDouble(System.console().readLine("Spannung:"));
+    double staerke =  Double.parseDouble(System.console().readLine("Stärke:"));
+    System.out.println( spannung / staerke + " Ohm");
+  }
+  public static void main( String[ ] args ) {
+    ElWiderstand();
+  }
+}
