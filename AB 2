@@ -1,4 +1,4 @@
-//AB 02 E2 Aufgabe 1-4
+//AB 02 E2 Aufgabe 1-6
 class AB2 {
   static void ZahlDoppel(){
     double zahl = Double.parseDouble(System.console().readLine("Zahl her:")) ;
@@ -21,7 +21,52 @@ class AB2 {
     double staerke =  Double.parseDouble(System.console().readLine("Stärke:"));
     System.out.println( spannung / staerke + " Ohm");
   }
-  public static void main( String[ ] args ) {
-    ElWiderstand();
+  static void BMI(){
+    double groesse = readZahl("Größe: ");
+    double gewicht = readZahl("Gewicht: ");
+    double BMI = gewicht/(groesse* groesse);
+    System.out.println( "BMI: "+ BMI );
   }
-}
+  static void  Notenschnitt(){
+    double einser = readZahl("1: ");
+    double zweier = readZahl("2: ");
+    double dreier = readZahl("3: ");
+    double vierer = readZahl("4: ");
+    double funfer = readZahl("5: ");
+    double sechser = readZahl("6: ");
+    double anzahlNoten = einser + zweier + dreier + vierer+ funfer+ sechser;
+    double GesAnzahl = einser + zweier*2 + dreier*3 + vierer*4 + funfer*5 + sechser*6;
+    System.out.println( "Schnitt: " + GesAnzahl/anzahlNoten+ "⌀" );
+  }
+  
+  public static void main( String[ ] args ) {
+   System.out.println( "Programm Auswählen: " );
+    System.out.println( "1: Verdoppeln" );
+    System.out.println( "2: Multiplier" );
+    System.out.println( "3: Zinsen" );
+    System.out.println( "4: Elektrischer Widerstand" );
+    System.out.println( "5: BMI" );
+    System.out.println( "6: Notenschnitt" );
+   String eingabe = System.console().readLine(); 
+    if (eingabe == "1") {
+      ZahlDoppel();
+    }
+    if (eingabe == "2") {
+      multiplier();
+  }
+    if (eingabe == "3") {
+      Zinssatz();
+    }
+    if (eingabe == "4") {
+      ElWiderstand();
+    }
+    if (eingabe == "5") {
+      BMI();
+    }
+    if (eingabe == "6") {
+      Notenschnitt();
+    }
+  }
+    static double readZahl(String prompt){
+      return Double.parseDouble(System.console().readLine(prompt));
+    }
