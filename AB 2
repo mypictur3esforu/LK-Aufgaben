@@ -1,72 +1,101 @@
-//AB 02 E2 Aufgabe 1-6
 class AB2 {
-  static void ZahlDoppel(){
-    double zahl = Double.parseDouble(System.console().readLine("Zahl her:")) ;
-    Double zahl2 = zahl *2;
-    System.out.println("Ergebnis: "+ zahl2 );
+  static void ZahlDoppel( ) {
+    double zahl = Double.parseDouble( System.console( ).readLine( "Zahl her:" ) );
+    Double zahl2 = zahl * 2;
+    System.out.println( "Ergebnis: " + zahl2 );
   }
-  static void multiplier(){
-    double zahl =  Double.parseDouble(System.console().readLine("Zahl 1:"));
-    double zahl2 =  Double.parseDouble(System.console().readLine("Zahl 2:"));
-    System.out.println("Ergebnis: "+ zahl * zahl2 );
+  static void multiplier( ) {
+    double zahl = Double.parseDouble( System.console( ).readLine( "Zahl 1:" ) );
+    double zahl2 = Double.parseDouble( System.console( ).readLine( "Zahl 2:" ) );
+    System.out.println( "Ergebnis: " + zahl * zahl2 );
   }
-    static void Zinssatz(){
-    double startkapital =  Double.parseDouble(System.console().readLine("Startkapital:"));
-    double zinssatz =  Double.parseDouble(System.console().readLine("Zinssatz:"));
-    double zinsen = startkapital/100 * zinssatz;
-    System.out.println(zinsen +" Zinsen");
+  static void Zinssatz( ) {
+    double startkapital = Double.parseDouble( System.console( ).readLine( "Startkapital:" ) );
+    double zinssatz = Double.parseDouble( System.console( ).readLine( "Zinssatz:" ) );
+    double zinsen = startkapital / 100 * zinssatz;
+    System.out.println( zinsen + " Zinsen" );
   }
-  static void ElWiderstand(){
-    double spannung =  Double.parseDouble(System.console().readLine("Spannung:"));
-    double staerke =  Double.parseDouble(System.console().readLine("Stärke:"));
-    System.out.println( spannung / staerke + " Ohm");
+  static void ElWiderstand( ) {
+    double spannung = Double.parseDouble( System.console( ).readLine( "Spannung:" ) );
+    double staerke = Double.parseDouble( System.console( ).readLine( "Stärke:" ) );
+    System.out.println( spannung / staerke + " Ohm" );
   }
-  static void BMI(){
-    double groesse = readZahl("Größe: ");
-    double gewicht = readZahl("Gewicht: ");
-    double BMI = gewicht/(groesse* groesse);
-    System.out.println( "BMI: "+ BMI );
+  static void BMI( ) {
+    double groesse = readZahl( "Größe: " );
+    double gewicht = readZahl( "Gewicht: " );
+    double BMI = gewicht / ( groesse * groesse );
+    System.out.println( "BMI: " + BMI );
   }
-  static void  Notenschnitt(){
-    double einser = readZahl("1: ");
-    double zweier = readZahl("2: ");
-    double dreier = readZahl("3: ");
-    double vierer = readZahl("4: ");
-    double funfer = readZahl("5: ");
-    double sechser = readZahl("6: ");
-    double anzahlNoten = einser + zweier + dreier + vierer+ funfer+ sechser;
-    double GesAnzahl = einser + zweier*2 + dreier*3 + vierer*4 + funfer*5 + sechser*6;
-    System.out.println( "Schnitt: " + GesAnzahl/anzahlNoten+ "⌀" );
+  static void Notenschnitt( ) {
+    double einser = readZahl( "1: " );
+    double zweier = readZahl( "2: " );
+    double dreier = readZahl( "3: " );
+    double vierer = readZahl( "4: " );
+    double funfer = readZahl( "5: " );
+    double sechser = readZahl( "6: " );
+    double anzahlNoten = einser + zweier + dreier + vierer + funfer + sechser;
+    double GesAnzahl = einser + zweier * 2 + dreier * 3 + vierer * 4 + funfer * 5 + sechser * 6;
+    System.out.println( "Schnitt: " + GesAnzahl / anzahlNoten + "⌀" );
+  }
+  static void PQFormel(){
+    double p = readZahl("P: ");
+    double q = readZahl("Q: ");
+    double ergebnis1 = -(p/2)+ Math.sqrt((p/2)*(p/2) - q);
+    double ergbnis2 = -(p/2)- Math.sqrt((p/2)*(p/2) - q);
+    System.out.println( "X1 = " + ergebnis1 +"\n X2 = " + ergbnis2 );
+  }
+  static void HypoRechner(){
+    double KatheteA = readZahl("Kathete A: ");
+    double KatheteB = readZahl("Kathete B: ");
+    System.out.println( "Ergebnis: " + Math.sqrt(KatheteA*KatheteA + KatheteB*KatheteB));
+  }
+  static void GeldEintreiber(){
+    double Erwachsene = readZahl("Erwachsene: ");
+    double Arbeitverweigerer = readZahl("Kinder: ");
+    System.out.println( "Preis: "+ Erwachsene * 6 + Arbeitverweigerer * 4 + "€" ); //sind auf einmal iwi Strings, bei Double.parseDouble Fehlermeldung, dass es kein String sei
   }
   
   public static void main( String[ ] args ) {
-   System.out.println( "Programm Auswählen: " );
+    System.out.println( "Programm Auswählen: " );
     System.out.println( "1: Verdoppeln" );
     System.out.println( "2: Multiplier" );
     System.out.println( "3: Zinsen" );
     System.out.println( "4: Elektrischer Widerstand" );
     System.out.println( "5: BMI" );
     System.out.println( "6: Notenschnitt" );
-   String eingabe = System.console().readLine(); 
-    if (eingabe == "1") {
-      ZahlDoppel();
+    System.out.println( "7: PQ Formel Rechner" );
+    System.out.println( "8: Hypothenuse berechnen" );
+    System.out.println( "9: Schwimmbad Eintrittspreise" );
+    String eingabe = System.console( ).readLine( );
+    if ( eingabe == "1" ) {
+      ZahlDoppel( );
     }
-    if (eingabe == "2") {
-      multiplier();
+    if ( eingabe == "2" ) {
+      multiplier( );
+    }
+    if ( eingabe == "3" ) {
+      Zinssatz( );
+    }
+    if ( eingabe == "4" ) {
+      ElWiderstand( );
+    }
+    if ( eingabe == "5" ) {
+      BMI( );
+    }
+    if ( eingabe == "6" ) {
+      Notenschnitt( );
+    }
+    if ( eingabe == "7" ) {
+      PQFormel();
+    }
+    if ( eingabe == "8") {
+      HypoRechner();
+    }
+    if ( eingabe == "9") {
+      GeldEintreiber();
+    }
   }
-    if (eingabe == "3") {
-      Zinssatz();
-    }
-    if (eingabe == "4") {
-      ElWiderstand();
-    }
-    if (eingabe == "5") {
-      BMI();
-    }
-    if (eingabe == "6") {
-      Notenschnitt();
-    }
+  static double readZahl( String prompt ) {
+    return Double.parseDouble( System.console( ).readLine( prompt ) );
   }
-    static double readZahl(String prompt){
-      return Double.parseDouble(System.console().readLine(prompt));
-    }
+}
