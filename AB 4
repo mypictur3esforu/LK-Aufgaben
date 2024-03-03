@@ -1,0 +1,113 @@
+class ButtonAB {
+  
+  public static void main( String[ ] args ) {
+    JFrame frame = new JFrame();
+    JPanel panelEin = new JPanel("4");
+    JPanel buttOb = new JPanel("3");
+    JPanel buttUnt = new JPanel("3");
+    JLabel Ergebnis = new JLabel("asd");
+
+    double A = 0;
+    double B = 0;
+
+//Eingabe
+    JLabel a = new JLabel("a:");
+    JTextArea EingabeA = new JTextArea("a");
+    JLabel b = new JLabel("b:");
+    JTextArea EingabeB = new JTextArea("b");
+    
+//Rechenoperationen
+    JButton aPb = new JButton("a + b"); 
+    JButton aMb = new JButton("a - b");
+    JButton aTb = new JButton("a * b");
+    JButton aDb = new JButton("a : b");
+    JButton aHb = new JButton("a&#x1D47;");
+    JButton AC = new JButton("AC");
+
+//CSS
+    Ergebnis.setCSS("margin: 2em; font-size: 1.5em");
+    panelEin.setCSS("margin: 3em");
+    buttOb.setCSS("");
+    aPb.setCSS("padding: 2em");
+    aHb.setCSS("padding: 2em");
+    
+//Elemente einfügen   
+    frame.add(Ergebnis);
+    frame.add(panelEin);
+    frame.add(buttOb);
+    frame.add(buttUnt);
+
+    panelEin.add(a);
+    panelEin.add(EingabeA);
+    panelEin.add(b);
+    panelEin.add(EingabeB);
+    
+    buttOb.add(aPb);
+    buttOb.add(aMb);
+    buttOb.add(aTb);
+    
+    buttUnt.add(aDb);
+    buttUnt.add(aHb);
+    buttUnt.add(AC);
+
+//leider zu langsam :( und async gibt es wohl net
+    // buttOb.addActionListener((EvOB)->{
+    //   System.out.println( "Klappt" );
+    //   A = DoubleParser(EingabeA.getValue());
+    //   B = DoubleParser(EingabeB.getValue());
+    // });
+
+    aPb.addActionListener((Ev)->{
+      A = DoubleParser(EingabeA.getValue());
+      B = DoubleParser(EingabeB.getValue());
+      double C = A + B;
+      Ergebnis.setValue("Ergebnis: " + C);
+    });   
+    
+    aMb.addActionListener((Ev)->{
+      A = DoubleParser(EingabeA.getValue());
+      B = DoubleParser(EingabeB.getValue());
+      double C = A - B;
+      Ergebnis.setValue("Ergebnis: " + C);
+    });  
+    
+    aTb.addActionListener((Ev)->{
+      A = DoubleParser(EingabeA.getValue());
+      B = DoubleParser(EingabeB.getValue());
+      double C = A * B;
+      Ergebnis.setValue("Ergebnis: " + C);
+    });   
+    
+    aDb.addActionListener((Ev)->{
+      A = DoubleParser(EingabeA.getValue());
+      B = DoubleParser(EingabeB.getValue());
+      double C = A / B;
+      Ergebnis.setValue("Ergebnis: " + C);
+    }); 
+    
+    aHb.addActionListener((Ev)->{
+      A = DoubleParser(EingabeA.getValue());
+      B = DoubleParser(EingabeB.getValue());
+      double C = A;
+      for (int i = 1; i < B; i++) {
+      C = C * A;
+      }
+      Ergebnis.setValue("Ergebnis: " + C);
+    });  
+  }
+
+//Double Parser
+  static double DoubleParser(String x){
+    return Double.parseDouble(x);
+  } 
+
+//Variablen Schreiber
+  // static double VariablenSchreiber(String a, String b){
+  //   //a == EingabeA & b == EingabeB
+  // double A = DoubleParser(a);
+  // double B = DoubleParser(b);
+  //   return A + B;
+  // }
+}
+
+
