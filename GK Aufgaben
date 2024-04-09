@@ -1,7 +1,7 @@
 class SteffansAufgaben {
   public static int zahl, step;
   public static void main( String[ ] args ) {
-    zahl = 100;
+    zahl = 0;
     step = 1;
     Continuer();
     step = 2;
@@ -27,6 +27,7 @@ class SteffansAufgaben {
   }
 //4 teilbar aber net 5
   public static void VierAberNetFuenf(){
+    ZahlInputer();
     for (int i = 1; i <= zahl; i++) {
       int x = i % 4; 
       if (x == 0) {
@@ -36,9 +37,11 @@ class SteffansAufgaben {
         }
       }
     }
+    Continuer();
   }
   
    static void Primzahlen(){
+     ZahlInputer();
     for (int i = 1; i <= zahl; i++) {
     int Teiler = 0;
       for (int a = 1; a <= i; a++) {
@@ -51,6 +54,17 @@ class SteffansAufgaben {
         System.out.println( i );
       }
     }
+     Continuer();
+  }
+  public static void ZahlInputer(){
+    System.out.println( "\nBis zu welcher Zahl möchtest du das gewählte Programm laufen lassen?" );
+    String userInput = System.console().readLine("Gib hier deine Zahl an: ");
+    if (userInput > 500) {
+      System.out.println( "Du hast das Limit überschritten. Zur Sicherheit deines RAMs ist das Limit bei 500!" );
+    userInput = "0";
+    ZahlInputer();
+    }
+    zahl = Integer.parseInt(userInput);
   }
   
 }
