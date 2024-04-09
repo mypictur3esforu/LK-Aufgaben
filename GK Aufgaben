@@ -6,7 +6,7 @@ class SteffansAufgaben {
     Continuer();
    /* switch(userInput){
       case 1 -> VierAberNetFuenf();
-      case eins -> VierAberNetFuenf
+      case eins -> VierAberNetFuenf();
     }*/
   }
   public static void Continuer(){
@@ -60,7 +60,7 @@ class SteffansAufgaben {
     System.out.println( "\nBis zu welcher Zahl möchtest du das gewählte Programm laufen lassen?" );
     String userInput = System.console().readLine("Gib hier deine Zahl an: ");
     if (userInput > 500) {
-      System.out.println( "Du hast das Limit überschritten. Zur Sicherheit deines RAMs ist das Limit bei 500!" );
+      System.out.println( "Du hast das Limit überschritten. Zur Sicherheit deines RAMs ist das Limit 500!" );
     userInput = "0";
     ZahlInputer();
     }
