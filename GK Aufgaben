@@ -1,0 +1,56 @@
+class SteffansAufgaben {
+  public static int zahl, step;
+  public static void main( String[ ] args ) {
+    zahl = 100;
+    step = 1;
+    Continuer();
+    step = 2;
+   /* switch(userInput){
+      case 1 -> VierAberNetFuenf();
+      case eins -> VierAberNetFuenf
+    }*/
+  }
+  public static void Continuer(){
+    if (step == 1) {
+      System.out.println( "Führe ein Programm aus:" );
+    }else{
+    System.out.println( "Möchtest du ein weiteres Programm ausführen?" );
+    }
+    System.out.println( "1: Zaheln die durch Vier, aber nicht durch fünf teilbar sind" );
+    System.out.println( "2: Primzahlen" );
+    String userInput = System.console().readLine("Gib hier die Zahl des gewünschten Programm ein:");
+    if (userInput == "1") {
+    VierAberNetFuenf();  
+    }else if (userInput == "2") {
+      Primzahlen();
+    }
+  }
+//4 teilbar aber net 5
+  public static void VierAberNetFuenf(){
+    for (int i = 1; i <= zahl; i++) {
+      int x = i % 4; 
+      if (x == 0) {
+        x = i % 5;
+        if (x != 0) {
+          System.out.println( i );
+        }
+      }
+    }
+  }
+  
+   static void Primzahlen(){
+    for (int i = 1; i <= zahl; i++) {
+    int Teiler = 0;
+      for (int a = 1; a <= i; a++) {
+        int x = i % a;
+        if (x == 0) {
+          Teiler++;
+        }
+      }
+      if (Teiler == 2) {
+        System.out.println( i );
+      }
+    }
+  }
+  
+}
