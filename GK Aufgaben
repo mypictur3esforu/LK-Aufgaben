@@ -16,13 +16,26 @@ class SteffansAufgaben {
     }else{
     System.out.println( "\nMöchtest du ein weiteres Programm ausführen?" );
     }
-    System.out.println( "\n1: Zaheln die durch Vier, aber nicht durch fünf teilbar sind" );
-    System.out.println( "2: Primzahlen" );
+    System.out.println( "\n1: Alle Zahlen die durch drei teilbar sind" );
+    System.out.println( "2: Zaheln die durch Vier, aber nicht durch fünf teilbar sind" );
+    System.out.println( "3: Primzahlen" );
     String userInput = System.console().readLine("Gib hier die Zahl des gewünschten Programm ein:");
     if (userInput == "1") {
-    VierAberNetFuenf();  
+      DreiTeiler();
     }else if (userInput == "2") {
+    VierAberNetFuenf();  
+    }else if (userInput == "3") {
       Primzahlen();
+    }
+  }
+
+  public static void DreiTeiler(){
+    ZahlInputer();
+    for (int i = 1; i <= zahl; i++) {
+      int x = i % 3;
+      if (x == 0) {
+        System.out.println( i );
+      }
     }
   }
 //4 teilbar aber net 5
