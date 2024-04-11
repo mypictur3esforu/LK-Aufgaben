@@ -1,29 +1,46 @@
 class Kopfrechentrainer {
   public static void main( String[ ] args ) {
+    double randomNumb = 5;
     double minNumber = -100;
     double maxNumber = 100;
     boolean negativNumbers = true;
    JFrame frame = new JFrame();
    JLabel label = new JLabel("Hallo, das ist hier ist der Kopfrechentrainer. Klicke auf Start um zu beginnen");
    JLabel task = new JLabel("");
-   JButton startButton = new JButton("Start");
+    JButton startButton = new JButton("Start");
+    JButton aPb = new JButton("Nur Additionsaufgaben"); 
+    JButton aMb = new JButton("Nur Subtraktionsaufgaben");
+    JButton aTb = new JButton("Nur Multiplikationsaufgaben");
+    JButton aDb = new JButton("Nur Divisionsaufgaben");
+    JButton mixed = new JButton("Alle vier Rechenarten");
     JButton examineButton = new JButton("Prüfen");
    JTextField input = new JTextField("number", "Gib deine Lösung ein:");
+    JPanel panel = new JPanel("Hallo");
     frame.add(label);
+    frame.add(panel);
+    panel.add(aPb);
+    panel.add(aMb);
+    panel.add(aTb);
+    panel.add(aDb);
+    panel.add(mixed);
     frame.add(startButton);
     frame.setLayout("1");
+    panel.setLayout("5");
     int punkte = 0;
        double answer, x, y;
     startButton.addActionListener((ev)->{
       frame.remove(startButton);
+      frame.remove(panel);
       frame.add(task);
       frame.add(input);
       frame.add(examineButton);
       label.setValue("Die Aufgaben beginnen nun:");
       label.setCSS("background-color: white;");
       input.setValue("");
-      double randomNumb = Randomizer(1, 4, false);
-      randomNumb = 4;
+      if (randomNumb == 5) {
+      randomNumb = Randomizer(1, 4, false);
+      }
+      //randomNumb = 4;
        x = Randomizer(minNumber, maxNumber, negativNumbers);
        y = Randomizer(minNumber, maxNumber, negativNumbers);
      if (randomNumb == 1) {
@@ -57,10 +74,28 @@ class Kopfrechentrainer {
       }else{
         frame.remove(input);
         frame.remove(examineButton);
+        frame.add(panel);
         frame.add(startButton);
         task.setValue("Das ist leider nicht richtig D:! Das richtige Ergebnis ist: "+answer +". \nDeine Punktzahl beträgt "+punkte+". Möchtest du eine neue Runde beginnen?");
+        punkte = 0;
         startButton.setValue("Erneut starten");
       }
+    });
+    
+    aPb.addActionListener((Ev)->{
+      randomNumb = 1;
+    });
+    aMb.addActionListener((Ev)->{
+      randomNumb = 2;
+    });
+    aTb.addActionListener((Ev)->{
+      randomNumb = 3;
+    });
+    aDb.addActionListener((Ev)->{
+      randomNumb = 4;
+    });
+    mixed.addActionListener((Ev)->{
+      randomNumb = 5;
     });
   }
 public static double Randomizer(double min, double max, boolean negativ){
