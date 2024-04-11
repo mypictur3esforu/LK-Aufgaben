@@ -1,0 +1,76 @@
+class Kopfrechentrainer {
+  public static void main( String[ ] args ) {
+    double minNumber = -100;
+    double maxNumber = 100;
+    boolean negativNumbers = true;
+   JFrame frame = new JFrame();
+   JLabel label = new JLabel("Hallo, das ist hier ist der Kopfrechentrainer. Klicke auf Start um zu beginnen");
+   JLabel task = new JLabel("");
+   JButton startButton = new JButton("Start");
+    JButton examineButton = new JButton("Prüfen");
+   JTextField input = new JTextField("number", "Gib deine Lösung ein:");
+    frame.add(label);
+    frame.add(startButton);
+    frame.setLayout("1");
+    int punkte = 0;
+       double answer, x, y;
+    startButton.addActionListener((ev)->{
+      frame.remove(startButton);
+      frame.add(task);
+      frame.add(input);
+      frame.add(examineButton);
+      label.setValue("Die Aufgaben beginnen nun:");
+      label.setCSS("background-color: white;");
+      input.setValue("");
+      double randomNumb = Randomizer(1, 4, false);
+      randomNumb = 4;
+       x = Randomizer(minNumber, maxNumber, negativNumbers);
+       y = Randomizer(minNumber, maxNumber, negativNumbers);
+     if (randomNumb == 1) {
+       answer = x + y;
+        task.setValue(""+x + " + " + y +" = ?");
+      }else if (randomNumb == 2) {
+        answer = x - y;
+        task.setValue(""+x + " - " + y +" = ?");
+      }else if (randomNumb == 3) {
+        answer = x * y;
+        task.setValue(""+x + " × " + y +" = ?");
+      }else if (randomNumb == 4) {
+       while (x % y != 0) {
+         x = Randomizer(minNumber, maxNumber, negativNumbers);
+         y = Randomizer(minNumber, maxNumber, negativNumbers);
+       }
+        answer = x / y;
+        task.setValue(""+x + " ÷ " + y +" = ?");
+      }
+      //String[] rechenops = {"+", "-", "*", "/"}; 
+      //  Randomizer(-100, 100, true) rechenops[Randomizer(1, 4, false)] Randomizer(-100, 100, true);
+    });
+    examineButton.addActionListener((ev)->{
+      if (Double.parseDouble(input.getValue()) == answer) {
+        punkte++;
+        frame.remove(examineButton);
+        frame.add(startButton);
+        startButton.setValue("Weiter");
+        label.setCSS("background-color: green;");
+        label.setValue("Rischtig!");
+      }else{
+        frame.remove(input);
+        frame.remove(examineButton);
+        frame.add(startButton);
+        task.setValue("Das ist leider nicht richtig D:! Das richtige Ergebnis ist: "+answer +". \nDeine Punktzahl beträgt "+punkte+". Möchtest du eine neue Runde beginnen?");
+        startButton.setValue("Erneut starten");
+      }
+    });
+  }
+public static double Randomizer(double min, double max, boolean negativ){
+  double randomNumb = Math.round((Math.random()*max) +1);
+  if (randomNumb <= min) {
+    Randomizer(min, max, negativ);
+  }
+  if (negativ == true && Math.random()*1 == 1) {
+    randomNumb *= -1;
+  }
+  return randomNumb;
+}
+}
