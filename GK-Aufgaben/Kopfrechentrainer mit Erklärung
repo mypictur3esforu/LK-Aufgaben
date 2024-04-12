@@ -1,0 +1,145 @@
+class Kopfrechentrainer {
+  public static void main( String[ ] args ) {
+    // hier werden Variablen erstellt
+    double randomNumb = 5;
+    // die sind nicht unbedingt nötig (die sind dazu da ggf. die Zahlenrange einfacher zu verändern)
+    double minNumber = -100;
+    double maxNumber = 100;
+    boolean negativNumbers = true;
+
+    // das sind ganz viele UI Elemente die hier erstellt werden
+   JFrame frame = new JFrame();
+   JLabel label = new JLabel("Hallo, das ist hier ist der Kopfrechentrainer. Klicke auf Start um zu beginnen");
+   JLabel task = new JLabel("");
+    JButton startButton = new JButton("Start");
+    JButton aPb = new JButton("Nur Additionsaufgaben"); 
+    JButton aMb = new JButton("Nur Subtraktionsaufgaben");
+    JButton aTb = new JButton("Nur Multiplikationsaufgaben");
+    JButton aDb = new JButton("Nur Divisionsaufgaben");
+    JButton mixed = new JButton("Alle vier Rechenarten");
+    JButton examineButton = new JButton("Prüfen");
+   JTextField input = new JTextField("number", "Gib deine Lösung ein:");
+    JPanel panel = new JPanel("Hallo");
+
+    // jetzt wird gesagt welche UI Elemente am Anfang auf dem Bildschirm zu sehen sind
+    frame.add(label);
+    frame.add(panel);
+    // panel hilft die ganzen Rechoperationen in eine Reihe zu bringen
+    panel.add(aPb);
+    panel.add(aMb);
+    panel.add(aTb);
+    panel.add(aDb);
+    panel.add(mixed);
+    frame.add(startButton);
+    // jetzt wird gesagt, dass der Frame nur eine Spalte und das Panel 5 Spalten hat. So ist das Programm untereinander bis auf die Elemente, die im Panel sind
+    frame.setLayout("1");
+    panel.setLayout("5");
+
+    // hier werden wieder nur Variablen deklariert / hätte man auch früher machen können
+    int punkte = 0;
+    double answer, x, y;
+
+    // nun der EventListener, der ist dafür da auf das Drücken des startButtons zu reagieren
+    startButton.addActionListener((ev)->{
+      //wenn der startButton gedrückt wird, dann passiert folgendes
+      //der startButton und das panel werden raus genommen
+      frame.remove(startButton);
+      frame.remove(panel);
+      // task input und examineButton werden hinzugefügt
+      frame.add(task);
+      frame.add(input);
+      frame.add(examineButton);
+      //das Label erhält einen anderen Text und der Hintergrund des Labels wird weiß gemacht (das ist erstmal egal, wird aber später noch wichtig)
+      label.setValue("Die Aufgaben beginnen nun:");
+      label.setCSS("background-color: white;");
+      input.setValue("");
+
+      //hier beginnt die Auswahl der Aufgaben. Standardmäßig ist randomNumb = 5 und so werden automatisch alle Rechenarten mit einbezogen
+      if (randomNumb == 5) {
+        //hier wird entschieden, welche der 4 Rechenarten in dem Fall in der Aufgabe enthalten ist
+      randomNumb = Randomizer(1, 4, false);
+      }
+      //randomNumb = 4;
+      // nun werden die Zahlen, die in der Aufgabe benutzt werden, bestimmt
+       x = Randomizer(minNumber, maxNumber, negativNumbers);
+       y = Randomizer(minNumber, maxNumber, negativNumbers);
+
+      //jenachdem welche Rechenart gerade gefragt ist muss der Rechentrainer die Antwort passend berechnen und die Aufgabe dem User richtig übermitteln
+     if (randomNumb == 1) {
+       answer = x + y;
+        task.setValue(""+x + " + " + y +" = ?");
+      }else if (randomNumb == 2) {
+        answer = x - y;
+        task.setValue(""+x + " - " + y +" = ?");
+      }else if (randomNumb == 3) {
+        answer = x * y;
+        task.setValue(""+x + " × " + y +" = ?");
+      }else if (randomNumb == 4) {
+       // das ist eine kleine aber feine Besonderheit, denn einfach irgendwelche Zahlen zu dividieren kann sehr schwer sein (z.B. 54 ÷ 79 || 1 ÷ 33 usw.) deswegen soll das Programm die Zahlen so lange neu Würfeln bis es Zahlen gefunden hat die eintwer genau aufgehen (4 ÷ 2 = 2) oder zumindest mit .5 enden (z.B. 3 ÷ 2 = 1.5)
+       while (x % y != 0 || x % y != y/2) {
+         x = Randomizer(minNumber, maxNumber, negativNumbers);
+         y = Randomizer(minNumber, maxNumber, negativNumbers);
+       }
+        answer = x / y;
+        task.setValue(""+x + " ÷ " + y +" = ?");
+      }
+
+      // hier hab ich bisschen rumprobiert, aber es gibt glaube noch keine Arrays und ich denke, dass das ohnehin nicht funktioniert
+      //String[] rechenops = {"+", "-", "*", "/"}; 
+      //  Randomizer(-100, 100, true) rechenops[Randomizer(1, 4, false)] Randomizer(-100, 100, true);
+    });
+
+    // das ist der Event Listener für den Prüfen Button
+    examineButton.addActionListener((ev)->{
+      //wenn er geklickt wird, wird erst geschaut ob das Ergebniss richtig oder falsch ist
+      if (Double.parseDouble(input.getValue()) == answer) {
+        // wenn es richtig ist, kriegt der User einen Punkt und im wird angezeigt, dass er die Aufgabe richtig beantworte hat
+        punkte++;
+        frame.remove(examineButton);
+        frame.add(startButton);
+        startButton.setValue("Weiter");
+        //um dem User zu verdeutlichen, dass sich überhaupt was getan hat, wird das Label grün gefärbt, deswegen muss es auch auf weiß gesetzt werden, denn wenn der User weiter macht muss es wieder weiß sein, jedoch würde es ohne die Zeile oben grün bleiben
+        label.setCSS("background-color: green;");
+        label.setValue("Rischtig!");
+      }else{
+        // ist das Ergenis falsch wird dem User seine Punktzahl angegeben und ihm wird Angeboten die Rechenart zu wechseln oder einfach von neuem zu Beginnen
+        frame.remove(input);
+        frame.remove(examineButton);
+        frame.add(panel);
+        frame.add(startButton);
+        task.setValue("Das ist leider nicht richtig D:! Das richtige Ergebnis ist: "+answer +". \nDeine Punktzahl beträgt "+punkte+". Möchtest du eine neue Runde beginnen?");
+        punkte = 0; // typische Fehlerquelle, man denkt oftmals gar nicht dran, aber wenn die Punkte nicht wieder 0 gesetzt werden rechnet das Programm einfach weiter und die Punkte werden immer mehr
+        startButton.setValue("Erneut starten");
+      }
+    });
+
+    // das sind die Event Listener für die verschiedenen Rechneoperationen
+    aPb.addActionListener((Ev)->{
+      randomNumb = 1;
+    });
+    aMb.addActionListener((Ev)->{
+      randomNumb = 2;
+    });
+    aTb.addActionListener((Ev)->{
+      randomNumb = 3;
+    });
+    aDb.addActionListener((Ev)->{
+      randomNumb = 4;
+    });
+    mixed.addActionListener((Ev)->{
+      randomNumb = 5;
+    });
+  }
+
+// nun das vermutlich Beste an dem Programm: meine tolle Randomizer Funktion. Sie hat 3 Parameter, also zahlen die mitgegeben werden, mit der die Funktion rechnen kann. Ich benutze die zwei der  Parameter um die Zahlen range für die random Zahlen zu festzusetzen. Also was ist die niedrigste, was die höchste Zahl. Der dritte gibt an ob die Zahlen ach negativ sein dürfen. Wenn das der Fall ist gibt es eine 50/50 Chance, dass das Vorzeichen der Zahl umgedreht wird.
+public static double Randomizer(double min, double max, boolean negativ){
+  double randomNumb = Math.round((Math.random()*max) +1);
+  if (randomNumb <= min) {
+    Randomizer(min, max, negativ);
+  }
+  if (negativ == true && Math.random()*1 == 1) {
+    randomNumb *= -1;
+  }
+  return randomNumb;
+}
+}
