@@ -1,0 +1,37 @@
+class Kopfrechentrainer {
+  static int punkte; 
+  public static void main( String[ ] args ) {
+    punkte = 0;
+    Aufgabe();
+        }
+  
+public static void Aufgabe(){
+    double x = Randomizer(-10, 10, true);
+    double y = Randomizer(-10, 10, true);
+    System.out.println(x + " + " + y + " =");
+    double answer = x + y;
+    String userInput = System.console().readLine("Lösung: ");
+    if ( Double.parseDouble(userInput) == answer ) {
+      punkte++;
+      System.out.println( "\nRichtig" );
+      Aufgabe();
+        }else{
+      System.out.println( "\nFalsch, die Lösung ist " + answer + ". Du hast " + punkte + " Aufgaben am Stück richtig gelöst!");
+      userInput = System.console().readLine("Wenn du weiter machen willst gebe ´Weiter´ ein: ");
+      if (userInput == "Weiter") {
+        Aufgabe();
+      }
+      punkte = 0;
+} 
+}
+public static double Randomizer(double min, double max, boolean negativ){
+  double randomNumb = Math.round((Math.random()*max) +1);
+  if (randomNumb <= min) {
+    Randomizer(min, max, negativ);
+  }
+  if (negativ == true && Math.random()*1 == 1) {
+    randomNumb *= -1;
+  }
+  return randomNumb;
+}
+}
