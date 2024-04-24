@@ -15,6 +15,8 @@ class ABArray {
         break;
       case "5" : produkt(zahlen1);
         break;
+      case "6" : verschieben(zahlen1);
+        break;
     }
   }
   static void vertauschen(int[] array, int pos1, int pos2){
@@ -47,16 +49,68 @@ class ABArray {
     System.out.println( produkt );
   }
 static void verschieben(int[] array){
-  int ersatz;
-  for (int i = 0; i < array.length; i++) {
-    ersatz = array[i + 1];
-    array[i + 1] = array[i];
+  int[] ersatz = new int[array.length];
+  for (int i = 0; i < array.length - 1; i++) {
+    ersatz[i + 1] = array[i];
+   // System.out.println(i + ": " + ersatz[i] );
   }
+  ersatz[0] = array[array.length - 1];
+  System.out.println( ersatz );
+    
+  /*for (int i = 1; i < array.length; i++) {
+    array[i] = ersatz[i - 1];
+    System.out.println("\n" + i + ": " + array[i] );
+  }*/
 }
 
+  int[] vergroessern(int[] array){
+    int[] array2 = new int[array.length * 2];
+      for (int i = 0; i < array.length; i++) {
+        array2[i] = array[i];
+      }
+    return array2;
+  }
+
+  boolean enthaelt(int[] array, int z){
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] == z) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  int anzahl(int[] array, int z){
+    int wieOft = 0;
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] == z) {
+        wieOft++;
+      }
+    }
+    return wieOft;
+  }
+
+  double schnittUeber(int[] array, int minimum){
+    double summe = 0;
+    for (int i = 1; i < array.length; i++) {
+      if (array[i] > minimum) {
+        summe += array[i];
+      }
+    }
+    return summe/ array.length;
+  }
+
+  
+
+  
 
 
 
+
+
+
+
+  
 
 
 
