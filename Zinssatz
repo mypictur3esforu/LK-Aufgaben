@@ -1,0 +1,19 @@
+import java.util.Scanner;
+
+public class programm{
+    public static void main(String args){
+        double kapital = Scan.nextDouble("Kapital");
+        double zinsen = Scan.nextDouble();
+        double zeitraum = Scan.nextDouble();
+        while (kapital <= 0) {
+            System.out.println("Das Kapital soll nicht negativ sein!");
+            kapital = Scan.nextDouble("Gib was neues ein!");
+        }
+
+        for (int i = 0; i <= zeitraum; i++) {
+           double aktuellerZinsatz = kapital * zinsen / 100;
+           kapital += aktuellerZinsatz;
+           System.out.println(aktuellerZinsatz);
+        }
+    }
+}
