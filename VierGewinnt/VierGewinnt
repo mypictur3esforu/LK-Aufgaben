@@ -1,1 +1,47 @@
-Hallo
+class VierGewinnt{
+  Spieler[] alleSpieler;
+  Spielfeld spielfeld;
+  Spieler amZug;
+  JButton[][] buttons;
+  static int reihen = 7, spalte = 6;
+  
+  VierGewinnt(){
+     buttons = new JButton[VierGewinnt.reihen][VierGewinnt.spalte];
+    alleSpieler = new Spieler[]{new Spieler("X"), new Spieler("O")};
+    amZug = alleSpieler[0];
+    spielfeld = new Spielfeld();
+    CreateUi();
+  }
+  
+  public static void main( String[ ] args ) {
+    new VierGewinnt();
+  }
+
+  void CreateUi(){
+    JFrame frame = new JFrame("1");
+    JPanel feld = new JPanel(VierGewinnt.reihen);
+    for (int i = 0; i < VierGewinnt.reihen; i++) {
+      for (int j = 0; j < VierGewinnt.spalte; j++) {
+      JButton button = new JButton("");
+      button.addActionListener((ev)->{
+        ButtonKlick(i, j);
+      });
+      buttons[i][j] = button;
+      feld.add(button);
+    }
+    }
+    frame.add(feld);
+    
+  }
+  void ButtonKlick(int reihe, int spalte){
+      spielfeld.felderDesFelds[reihe][spalte].belegung = amZug;
+    buttons[reihe][spalte].setValue(amZug.symbol);
+    if (amZug == alleSpieler[0]) {
+      amZug = alleSpieler[1];
+    }else if (amZug == alleSpieler[1]) {
+      amZug = alleSpieler[0];
+    }
+  }
+
+  
+}
