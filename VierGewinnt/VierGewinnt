@@ -37,6 +37,7 @@ class VierGewinnt{
                 int finalI = i;
                 int finalJ = j;
                 button.addActionListener((ev)->{
+                    System.out.println("Reihe: " + finalI + "\nSpalte: " + finalJ);
                     ButtonKlick(finalI, finalJ);
                 });
                 button.setRolloverEnabled(false);
@@ -104,6 +105,13 @@ class VierGewinnt{
         }
     }
     int rekursion = 0;
+
+    /**
+     * Sucht nach 4 aufeinanderfolgenden Feldern, welche durch den Spieler, der am Zug ist, belegt ist
+     * @param reihen Reihe des geklickten Felds
+     * @param spalten Spalte des geklickten Felds
+     * @param directions Richtung in die das Programm sucht
+     */
     void CheckWinner(int reihen, int spalten, int directions){
         System.out.println(spielfeld.felderDesFelds[reihen][spalten].belegung + "");
         int stack;
@@ -141,8 +149,39 @@ class VierGewinnt{
         }
     }
 
+    /**
+     * Schaut nach Diagonalen 4 in einer Reihe
+     * @param reihen Reihe des geklickten Felds
+     * @param spalten Spalte des geklickten Felds
+     * @return 4 gleiche Felder in einer Reihe gefunden?
+     */
     boolean CheckDiagonal(int reihen, int spalten){
-        int[][] steps = new int[][]{{1,1}, {1, -1}, {-1, 1}, {-1, -1}};
+        int[][] steps = new int[][]{{1,1}, {-1, -1}, {-1, 1}, {1, -1}};
+        int reihenDirection, spaltenDirection, combo = 0;
+        for (int i = 0; i < 4; i++) {
+            reihenDirection = steps[i][0];
+            spaltenDirection = steps[i][1];
+            for (int j = 0; j < 4; j++) {
+                if (reihen + (j * reihenDirection) < 0 || reihen + (j * reihenDirection) >= VierGewinnt.reihen || spalten + (j * spaltenDirection) < 0 || spalten + (j * spaltenDirection) >= VierGewinnt.spalten) {
+                    //wenn Feld nicht im Spielfeld skip es
+                    break;
+                }
+                try{
+                if (spielfeld.felderDesFelds[reihen + (j * reihenDirection)][spalten + (j * spaltenDirection)].belegung.equals(amZug)) {
+                    combo++;
+                }else {
+                    break;
+                }}catch (Exception e){
+                    break;
+                }
+                if (combo == 5) {
+                    GameOver(amZug.farbe);
+                }
+            }
+            if (i == 1) {
+                combo = 0;
+            }
+        }
         return false;
     }
 
