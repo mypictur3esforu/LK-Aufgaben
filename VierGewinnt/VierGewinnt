@@ -82,6 +82,11 @@ class VierGewinnt{
 //        }
     }
 
+    /**
+     * Soll das Fallen animieren
+     * @param reihe
+     * @param spalte
+     */
     void Animation(int reihe, int spalte){
         spielfeld.felderDesFelds[reihe][spalte].belegung = amZug;
         if (step >= reihe) {
@@ -104,88 +109,46 @@ class VierGewinnt{
             amZug = alleSpieler[0];
         }
     }
-    int rekursion = 0;
 
     /**
-     * Sucht nach 4 aufeinanderfolgenden Feldern, welche durch den Spieler, der am Zug ist, belegt ist
+     * Sucht nach 4 gleich belegten Feldern in einer Reihe. Wenn 4 in einer Reihe sind, wird GameOver aufgerufen
      * @param reihen Reihe des geklickten Felds
      * @param spalten Spalte des geklickten Felds
-     * @param directions Richtung in die das Programm sucht
      */
-    /*void CheckWinner(int reihen, int spalten, int directions){
-        System.out.println(spielfeld.felderDesFelds[reihen][spalten].belegung + "");
-        int stack;
-        int[][] lookAlike = new int[][]{{4,0}, {0, 4}};
-        for (int[] ints : lookAlike) {
-            stack = 0;
-            outerloop:
-            for (int j = 0; j <= ints[0] && reihen + j * directions >= 0 && reihen + j * directions < VierGewinnt.reihen; j++) {
-                for (int k = 0; k <= ints[1] && spalten + k * directions >= 0 && spalten + k * directions < VierGewinnt.spalten; k++) {
-                    int hypoReihe = reihen + j * directions, hypoSpalte = spalten + k * directions;
-                    if (spielfeld.felderDesFelds[hypoReihe][hypoSpalte].belegung == null) {
-                        continue outerloop;
-                    }
-                    if (spielfeld.felderDesFelds[hypoReihe][hypoSpalte].belegung.equals(amZug)) {
-                        stack++;
-                        if (stack == 4) {
-                            GameOver(amZug.farbe);
-                            return;
-                        }
-                    }else{
-                        continue outerloop;
-                    }
-                }
-            }
-            if (ints[0] == 0 && stack > 1 && rekursion == 0) {
-                rekursion = 1;
-                CheckWinner(reihen, spalten + (stack - 1) * directions, 1);
-            }
-        }
-        if (directions != -1) {
-            CheckWinner(reihen, spalten, -1);
-        }
-        if (CheckDiagonal(reihen, spalten)) {
-            GameOver(amZug.farbe);
-        }
-    }
-     */
-
-    /**
-     * Schaut nach Diagonalen 4 in einer Reihe
-     * @param reihen Reihe des geklickten Felds
-     * @param spalten Spalte des geklickten Felds
-     * @return 4 gleiche Felder in einer Reihe gefunden?
-     */
-    boolean CheckWinner(int reihen, int spalten){
-        int[][] steps = new int[][]{{1, 1}, {-1, -1}, {-1, 1}, {1, -1}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    void CheckWinner(int reihen, int spalten) {
+        int[][][] steps = new int[][][]{{{1, 1}, {-1, -1}}, {{-1, 1}, {1, -1}}, {{0, 1}, {0, -1}}, {{1, 0}, {-1, 0}}};
         int reihenDirection, spaltenDirection, combo = 0;
-        for (int i = 0; i < steps.length; i++) {
-            reihenDirection = steps[i][0];
-            spaltenDirection = steps[i][1];
-            for (int j = 0; j < 4; j++) {
-                if (reihen + (j * reihenDirection) < 0 || reihen + (j * reihenDirection) >= VierGewinnt.reihen || spalten + (j * spaltenDirection) < 0 || spalten + (j * spaltenDirection) >= VierGewinnt.spalten) {
-                    //wenn Feld nicht im Spielfeld skip es
-                    break;
-                }
-                try{
-                if (spielfeld.felderDesFelds[reihen + (j * reihenDirection)][spalten + (j * spaltenDirection)].belegung.equals(amZug)) {
-                    combo++;
-                }else {
-                    break;
-                }}catch (Exception e){
-                    break;
-                }
-                if (combo == 5) {
-                    GameOver(amZug.farbe);
+        for (int z = 0; z < steps.length; z++) {
+            for (int i = 0; i < steps[z].length; i++) {
+                reihenDirection = steps[z][i][0];
+                spaltenDirection = steps[z][i][1];
+                for (int j = 0; j < 4; j++) {
+                    if (reihen + (j * reihenDirection) < 0 || reihen + (j * reihenDirection) >= VierGewinnt.reihen || spalten + (j * spaltenDirection) < 0 || spalten + (j * spaltenDirection) >= VierGewinnt.spalten) {
+                        //wenn Feld nicht im Spielfeld skip es
+                        break;
+                    }
+                    try {
+                        if (spielfeld.felderDesFelds[reihen + (j * reihenDirection)][spalten + (j * spaltenDirection)].belegung.equals(amZug)) {
+                            combo++;
+                        } else {
+                            break;
+                        }
+                    } catch (Exception e) {
+                        break;
+                    }
+                    if (combo == 5) {
+                        GameOver(amZug.farbe);
+                    }
                 }
             }
-            if (i == 1 || i == 3 || i == 5) {
-                combo = 0;
-            }
+            combo = 0;
         }
-        return false;
     }
 
+    /**
+     * Erstellt einen neuen Frame, in dem angezeigt wird, wer gewonnen hat
+     * @param winnersColor Die Farbe des Spielers, der gewonnen hat
+     */
     void GameOver(Color winnersColor){
         feld.setVisible(false);
         JButton wButton = new JButton("Winner");
