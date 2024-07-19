@@ -1,0 +1,90 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.Arrays;
+
+public class Buchstabengitter {
+    static JFrame frame = new JFrame();
+    static JTextField rows, columns, buchstaben, answerWords;
+    static String[] buchstabenGitter, answers;
+
+    public static void main(String[] args) {
+        CreateUI();
+    }
+
+    static void CreateUI(){
+        JLabel infos = new JLabel("Trage die Anzahl an Reihen und Spalten ein! Danach trage die " +
+                "Buchstaben des Gitters mit einem Leerzeichen getrennt von links nach rechts ein");
+        rows = new JTextField("Anzahl Reihen (horizontal)");
+        columns = new JTextField("Anzahl Buchstaben in einer Reihe");
+        buchstaben = new JTextField("Trage hier die Buchstaben ein");
+        answerWords = new JTextField("Trage hier die zu findenden Wörter ein");
+        JButton confirmInput = new JButton("START");
+        confirmInput.addActionListener(ev->{
+            ProgrammStart();
+        });
+        JPanel usual = new JPanel(new GridLayout(5, 1)),
+                columnRowInput = new JPanel(new GridLayout(1, 2));
+        //columnRowInput.add(rows);
+        columnRowInput.add(columns);
+        usual.add(infos);
+        usual.add(columnRowInput);
+        usual.add(buchstaben);
+        usual.add(answerWords);
+        usual.add(confirmInput);
+        frame.add(usual);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+    static void ProgrammStart(){
+        InputToArray();
+        FindFirstChar();
+    }
+
+    static void InputToArray(){
+        buchstabenGitter = buchstaben.getText().split(" ");
+        answers = answerWords.getText().split(" ");
+    }
+
+    static void FindFirstChar(){
+        for (int i = 0; i < answers.length; i++) {
+            String[] answer = answers[i].split("");
+            for (int j = 0; j < buchstabenGitter.length; j++) {
+                if (buchstabenGitter[j].equals(answer[0])) {
+                    CheckIfWordComplete(j, answer);
+                }
+            }
+        }
+    }
+
+    static void CheckIfWordComplete(int stelleImArray, String[] gesuchtesWort){
+        int direction = 1, j = 0, charsPerRow = Integer.parseInt(columns.getText());
+        int[] buchstabenVonAnswer = new int[gesuchtesWort.length];
+        Arrays.fill(buchstabenVonAnswer, -1);
+        while(true){
+            for (int i = 0; i < gesuchtesWort.length && stelleImArray + i < buchstabenGitter.length; i += direction) {
+                if (gesuchtesWort[j].equals(buchstabenGitter[stelleImArray + i])) {
+                    buchstabenVonAnswer[j] = stelleImArray + i;
+                    if (buchstabenVonAnswer[buchstabenVonAnswer.length - 1] != -1) {
+                        FoundWord(buchstabenVonAnswer);
+                    }
+                }
+                j++;
+            }
+            if (direction == 1) {
+                direction = charsPerRow;
+            } else if (direction == charsPerRow) {
+                direction = charsPerRow + 1;
+            } else if (direction == charsPerRow + 1) {
+                break;
+            }
+        }
+    }
+
+    static void FoundWord(int[] stellenImArray){
+        System.out.println(Arrays.toString(stellenImArray));
+        for (int j : stellenImArray) {
+            System.out.println(buchstabenGitter[j]);
+        }
+    }
+}
