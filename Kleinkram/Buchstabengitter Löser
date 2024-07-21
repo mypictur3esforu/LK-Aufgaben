@@ -3,9 +3,11 @@ import java.awt.*;
 import java.util.Arrays;
 
 public class Buchstabengitter {
-    static JFrame frame = new JFrame();
-    static JTextField rows, columns, buchstaben, answerWords;
+    static JFrame frame = new JFrame("Buchstabengitter"), answerFrame = new JFrame("Answers");
+    static JPanel answerPanel = new JPanel();
+    static JTextField columns, buchstaben, answerWords;
     static String[] buchstabenGitter, answers;
+    static JButton[] labels;
 
     public static void main(String[] args) {
         CreateUI();
@@ -14,10 +16,27 @@ public class Buchstabengitter {
     static void CreateUI(){
         JLabel infos = new JLabel("Trage die Anzahl an Reihen und Spalten ein! Danach trage die " +
                 "Buchstaben des Gitters mit einem Leerzeichen getrennt von links nach rechts ein");
-        rows = new JTextField("Anzahl Reihen (horizontal)");
         columns = new JTextField("Anzahl Buchstaben in einer Reihe");
         buchstaben = new JTextField("Trage hier die Buchstaben ein");
         answerWords = new JTextField("Trage hier die zu findenden Wörter ein");
+        /*columns = new JTextField("15");
+        buchstaben = new JTextField("z p p g d u o a m a n g a n g " +
+                "y l r a h a c s n e o n s a h " +
+                "e u o c b b r t e c h n e t d " +
+                "b t m h k c t m h w c s f n y " +
+                "l o e z r a r f s k f b d f t " +
+                "e n t b b a c t i t a n l l t " +
+                "i d e p t o d t w f a a u u r " +
+                "h z c o r n r o i i u d p o i " +
+                "l r u l w h p l n n r a t r l " +
+                "z j r o s d m e i t n e r n h " +
+                "i f f n m n e p t u n b n y b " +
+                "n r z g o l d u j c l e t e r " +
+                "n a f b c h l o r v e j h u o " +
+                "h n l z j y e v o a r g o n m " +
+                "z c m u a s t a t d n c r i n");
+        answerWords = new JTextField("technet bismut polon astat radon franc rad rutherford dubn seaborg bohr hass prometh actin thor proactin uran neptun americ pluton cur berkel californ einstein ferm medelev nobel lawrenc darmstadt");
+        */
         JButton confirmInput = new JButton("START");
         confirmInput.addActionListener(ev->{
             ProgrammStart();
@@ -35,9 +54,17 @@ public class Buchstabengitter {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        answerFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
+        answerFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        answerFrame.add(answerPanel);
     }
     static void ProgrammStart(){
         InputToArray();
+        labels = new JButton[buchstabenGitter.length];
+        for (int i = 0; i < buchstabenGitter.length; i++) {
+            JButton label = new JButton(buchstabenGitter[i]);
+            labels[i] = label;
+        }
         FindFirstChar();
     }
 
@@ -55,6 +82,12 @@ public class Buchstabengitter {
                 }
             }
         }
+        answerPanel = new JPanel(new GridLayout(Integer.parseInt(columns.getText()), buchstabenGitter.length / Integer.parseInt(columns.getText())));
+        for (int i = 0; i < labels.length; i++) {
+            answerPanel.add(labels[i]);
+        }
+        answerFrame.add(answerPanel);
+        answerFrame.setVisible(true);
     }
 
     static void CheckIfWordComplete(int stelleImArray, String[] gesuchtesWort){
@@ -62,12 +95,16 @@ public class Buchstabengitter {
         int[] buchstabenVonAnswer = new int[gesuchtesWort.length];
         Arrays.fill(buchstabenVonAnswer, -1);
         while(true){
-            for (int i = 0; i < gesuchtesWort.length && stelleImArray + i < buchstabenGitter.length; i += direction) {
+            j = 0;
+            for (int i = 0; j < gesuchtesWort.length && stelleImArray + i < buchstabenGitter.length; i += direction) {
                 if (gesuchtesWort[j].equals(buchstabenGitter[stelleImArray + i])) {
                     buchstabenVonAnswer[j] = stelleImArray + i;
                     if (buchstabenVonAnswer[buchstabenVonAnswer.length - 1] != -1) {
                         FoundWord(buchstabenVonAnswer);
+                        return;
                     }
+                }else{
+                    break;
                 }
                 j++;
             }
@@ -83,10 +120,8 @@ public class Buchstabengitter {
 
     static void FoundWord(int[] stellenImArray){
         System.out.println(Arrays.toString(stellenImArray));
-        for (int j : stellenImArray) {
-            System.out.println(buchstabenGitter[j]);
+        for (int i = 0; i < stellenImArray.length; i++) {
+            labels[stellenImArray[i]].setBackground(Color.green);
         }
     }
 }
-/*z p p g d u o a m a n g a n g y l r a h a c s n e o n s a h e u o c b b r t e c h n e t d b t m h k c t m h w c s f n y l o e z r a r f s k f b d f te n t b b a c t i t a n l l t i d e p t o d w f a a u u r h z c o r n r o i i u d p o i l r u l w h p l n n r a t r l z j r o s d m e i t n e r n h i f f n m n e p t u n b n y b n r z g o l d u j c l e t e r n a f b c h l o r v e j h u o h n l z j y e v o a r g o n m z c m u a s t a t d n c r i n
-*/
