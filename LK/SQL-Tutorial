@@ -1,0 +1,32 @@
+Lektion 1:
+select name, bip/einwohner from cia
+where einwohner > 200e6
+
+select name from cia
+
+select * from cia where einwohner > 1e8
+
+select name, bip, region from cia
+where bip between 1 and 100e8 and region = "Asien"
+
+select name, einwohner from cia where name in ("Frankreich", "Deutschland", "Polen") 
+
+select Name, einwohner from cia where region = "Südamerika"
+
+select name, bip/einwohner from cia
+where einwohner > 200e6
+
+select name, bip/einwohner from cia
+where einwohner > 200e6
+order by bip/einwohner desc
+
+select name from cia
+where name like "%Vereinigte%"
+
+select name, region from cia
+order by region asc
+
+select name, bip from cia
+where bip is NULL
+
+
