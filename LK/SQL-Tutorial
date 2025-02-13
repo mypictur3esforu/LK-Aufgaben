@@ -29,4 +29,19 @@ order by region asc
 select name, bip from cia
 where bip is NULL
 
+select count(*) from cia
+
+select sum(einwohner) from cia
+
+select avg(bip) from cia
+
+select sum(einwohner), sum(bip) 
+from cia
+where region = "Europa"
+
+select min(fläche), max(fläche) from cia
+
+select count(distinct region) from cia
+
+
 
