@@ -1,0 +1,115 @@
+class Aufgabe {
+  int num1, num2, factor, ggT, punkte;
+  JLabel aufgabeP1, aufgabeP2;
+  JTextField answerP1, answerP2;
+  JFrame frame = new JFrame( "1" );
+  JButton con;
+  JButton button = new JButton( "Prüfen" );
+  JPanel taskAndSolution, task, solution;
+  
+  Aufgabe( ) {
+    UI();
+    newTask( );
+    normalize( );
+  }
+
+  private void UI(){
+    taskAndSolution = new JPanel("2");
+    task = new JPanel("1");
+    solution = new JPanel("1");
+    aufgabeP1 = new JLabel( "1" );
+    aufgabeP2 = new JLabel( "1" );
+    task.add(aufgabeP1);
+    task.add(aufgabeP2);
+    answerP1 = new JTextField();
+    answerP2 = new JTextField();
+    solution.add(answerP1);
+    solution.add(answerP2);
+    button.addActionListener( ( ev ) -> {
+      lockAnswerIn();
+    taskAndSolution.add(task);
+    taskAndSolution.add(solution);
+    } );
+    frame.add( taskAndSolution );
+    frame.add( button );
+    con = new JButton( "Weiter" );
+    con.addActionListener( ( ev ) -> {
+      newTask( );
+    } );
+  }
+  
+  private void lockAnswerIn( ) {
+    int ans1 = -1, ans2 = -1;
+    try {
+      ans1 = Integer.parseInt(answerP1.getValue( ) );
+      ans2 = Integer.parseInt(answerP2.getValue( ) );
+    } catch ( Exception e ) {
+      System.out.println( "Problem" );
+    }
+    if (noAnswer()) return;
+    if ( checkAnswer(ans1, ans2) ) taskSolved( );
+    else incorrect( );
+  }
+
+  private boolean checkAnswer(int ans1, int ans2){
+    return (ans1 == num1 / ggT && ans2 == num2 / ggT );
+  }
+
+  private boolean noAnswer(){
+    if ( answerP1.getValue( ) == "" || answerP2.getValue( ) == "" ) {
+      if (answerP1.getValue( ) == "" ) answerP1.setCSS( "background-color: blue;" );
+      if (answerP2.getValue( ) == "" ) answerP2.setCSS( "background-color: blue;" );
+      normalize( );
+      Thread.sleep( 500 );
+      return true;
+    }
+    return false;
+  }
+  
+  private void incorrect( ) {
+    frame.add( con );
+    button.setCSS( "background-color: red;" );
+    button.setValue( "Leider nicht richtig :(" );
+  }
+  
+  private void taskSolved( ) {
+    frame.add( con );
+    button.setCSS( "background-color: green;" );
+    button.setValue( "Richtig!" );
+  }
+  
+  private void normalize( ) {
+    answerP1.setCSS( "background-color: white;" );
+    answerP2.setCSS( "background-color: white;" );
+    button.setCSS( "background-color: white;" );
+    button.setValue( "Prüfen" );
+    answerP1.setValue( "" );
+    answerP2.setValue( "" );
+  }
+  
+  private void newTask( ) {
+    randomizeNumbers( );
+    aufgabeP1.setValue( num1 + "");
+    aufgabeP2.setValue( num2 + "");
+    normalize( );
+    frame.remove( con );
+  }
+  
+  private void randomizeNumbers( ) {
+    factor = Math.floor( Math.random( ) * 4 ) + 1;
+    num1 = Math.floor( Math.random( ) * 15 ) + 1;
+    num2 = Math.floor( Math.random( ) * 15 ) + 1;
+    num1 *= factor;
+    num2 *= factor;
+    ggT = getGGT();
+  }
+
+  private int getGGT(){
+    int ans = -1;
+    for (int i = 0; i <= num1; i++) {
+      if (num1 % i == 0 && num2 % i == 0) ans = i;
+  }
+    if(ans == -1) System.out.println( "ggT Fehler" );
+    return ans;
+  }
+}
