@@ -1,6 +1,6 @@
 class Aufgabe {
   int num1, num2, factor, ggT, punkte;
-  JLabel aufgabeP1, aufgabeP2;
+  JLabel aufgabeP1, aufgabeP2, punkteStand;
   JTextField answerP1, answerP2;
   JFrame frame = new JFrame( "1" );
   JButton con;
@@ -8,6 +8,7 @@ class Aufgabe {
   JPanel taskAndSolution, task, solution;
   
   Aufgabe( ) {
+    punkte = 0;
     UI();
     newTask( );
     normalize( );
@@ -18,7 +19,7 @@ class Aufgabe {
     task = new JPanel("1");
     solution = new JPanel("1");
     aufgabeP1 = new JLabel( "1" );
-    aufgabeP1.setCSS("border-bottom: 0.5ex solid black;");
+    aufgabeP1.setCSS("border: 0.1ex solid black; border-bottom: 0.5ex solid black;");
     aufgabeP2 = new JLabel( "1" );
     task.add(aufgabeP1);
     task.add(aufgabeP2);
@@ -31,6 +32,8 @@ class Aufgabe {
     taskAndSolution.add(task);
     taskAndSolution.add(solution);
     } );
+    punkteStand = new JLabel("Punktestand:" +punkte);
+    frame.add(punkteStand);
     frame.add( taskAndSolution );
     frame.add( button );
     con = new JButton( "Weiter" );
@@ -74,6 +77,8 @@ class Aufgabe {
   }
   
   private void taskSolved( ) {
+    punkte++;
+    
     frame.add( con );
     button.setCSS( "background-color: green;" );
     button.setValue( "Richtig!" );
