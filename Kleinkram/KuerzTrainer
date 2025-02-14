@@ -18,6 +18,7 @@ class Aufgabe {
     task = new JPanel("1");
     solution = new JPanel("1");
     aufgabeP1 = new JLabel( "1" );
+    aufgabeP1.setCSS("border-bottom: 0.5ex solid black;");
     aufgabeP2 = new JLabel( "1" );
     task.add(aufgabeP1);
     task.add(aufgabeP2);
@@ -59,8 +60,8 @@ class Aufgabe {
     if ( answerP1.getValue( ) == "" || answerP2.getValue( ) == "" ) {
       if (answerP1.getValue( ) == "" ) answerP1.setCSS( "background-color: blue;" );
       if (answerP2.getValue( ) == "" ) answerP2.setCSS( "background-color: blue;" );
+      Thread.sleep( 300 );
       normalize( );
-      Thread.sleep( 500 );
       return true;
     }
     return false;
