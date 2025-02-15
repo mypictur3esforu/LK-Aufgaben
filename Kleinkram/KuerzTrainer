@@ -1,5 +1,5 @@
 class Aufgabe {
-  int num1, num2, factor, ggT, punkte;
+  int num1, num2, factor, ggT, punkte, maxNumb, maxFactor;
   JLabel aufgabeP1, aufgabeP2, punkteStand;
   JTextField answerP1, answerP2;
   JFrame frame = new JFrame( "1" );
@@ -9,9 +9,11 @@ class Aufgabe {
   
   Aufgabe( ) {
     punkte = 0;
+    maxNumb = 15;
+    maxFactor = 5;
     UI();
     newTask( );
-    normalize( );
+    //normalize( );
   }
 
   private void UI(){
@@ -32,8 +34,12 @@ class Aufgabe {
     taskAndSolution.add(task);
     taskAndSolution.add(solution);
     } );
-    punkteStand = new JLabel("Punktestand:" +punkte);
-    frame.add(punkteStand);
+    JPanel top = new JPanel("1");
+    JLabel expl = new JLabel("Kürze die Brüche soweit es geht!");
+    punkteStand = new JLabel("Punktestand: " +punkte);
+    top.add(expl);
+    top.add(punkteStand);
+    frame.add(top);
     frame.add( taskAndSolution );
     frame.add( button );
     con = new JButton( "Weiter" );
@@ -64,21 +70,24 @@ class Aufgabe {
       if (answerP1.getValue( ) == "" ) answerP1.setCSS( "background-color: blue;" );
       if (answerP2.getValue( ) == "" ) answerP2.setCSS( "background-color: blue;" );
       Thread.sleep( 300 );
-      normalize( );
+      //normalize( );
+      answerP1.setCSS( "background-color: white;" );
+      answerP2.setCSS( "background-color: white;" );
       return true;
     }
     return false;
   }
   
   private void incorrect( ) {
-    frame.add( con );
     button.setCSS( "background-color: red;" );
     button.setValue( "Leider nicht richtig :(" );
   }
   
   private void taskSolved( ) {
     punkte++;
-    punkteStand.setValue( "Punkte: " + punkte );
+    punkteStand.setValue("Punkte: " + punkte);
+    if(punkte >= 15 && punkte % 5 == 0) maxNumb++;
+    if(punkte >= 20 && punkte % 10 == 0) maxFactor++;
     frame.add( con );
     button.setCSS( "background-color: green;" );
     button.setValue( "Richtig!" );
@@ -102,9 +111,9 @@ class Aufgabe {
   }
   
   private void randomizeNumbers( ) {
-    factor = Math.floor( Math.random( ) * 4 ) + 1;
-    num1 = Math.floor( Math.random( ) * 15 ) + 1;
-    num2 = Math.floor( Math.random( ) * 15 ) + 1;
+    factor = Math.floor( Math.random( ) * maxFactor ) + 1;
+    num1 = Math.floor( Math.random( ) * maxNumb ) + 1;
+    num2 = Math.floor( Math.random( ) * maxNumb ) + 1;
     num1 *= factor;
     num2 *= factor;
     ggT = getGGT();
