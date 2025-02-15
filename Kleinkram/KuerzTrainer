@@ -78,7 +78,7 @@ class Aufgabe {
   
   private void taskSolved( ) {
     punkte++;
-    
+    punkteStand.setValue( "Punkte: " + punkte );
     frame.add( con );
     button.setCSS( "background-color: green;" );
     button.setValue( "Richtig!" );
