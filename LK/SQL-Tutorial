@@ -44,4 +44,8 @@ select min(fläche), max(fläche) from cia
 select count(distinct region) from cia
 
 
-
+//3.4:
+select nachname
+from personal join bestellung
+on bestellung.personalnr = personal.personalnr
+where bestellung.bestellnr = 10266
