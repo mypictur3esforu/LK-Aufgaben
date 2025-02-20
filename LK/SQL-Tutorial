@@ -49,3 +49,13 @@ select nachname
 from personal join bestellung
 on bestellung.personalnr = personal.personalnr
 where bestellung.bestellnr = 10266
+
+
+//3.9
+select distinct k.firma, l.firma
+from kunde k, bestellung b, artikel a, lieferant l, bestelldetails bt
+where l.firma = "Escargots Nouveaux"
+and a.lieferantennr = l.lieferantennr
+and a.artikelnr = bt.artikelnr
+and bt.bestellnr = b.bestellnr
+and b.kundencode = k.kundencode
